@@ -1,6 +1,15 @@
 // PSAppDeployToolkit default extension recommendations
 {
     "recommendations": [
-        "ms-vscode.PowerShell"
+        "ms-vscode.PowerShell",
+        "Gruntfuggly.todo-tree",
+        "christian-kohler.path-intellisense",
+        "redhat.vscode-xml",
+        "oderwat.indent-rainbow",
+        "bagetx.inf",
+        "esbenp.prettier-vscode",
+        "jozefchmelar.compare",
+        "tylerleonhardt.vscode-inline-values-powershell",
+        "aaron-bond.better-comments"
     ]
 }
