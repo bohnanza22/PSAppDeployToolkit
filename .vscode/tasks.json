@@ -7,8 +7,8 @@
             "shell": {
                 "executable": "C:\\Windows\\System32\\WindowsPowerShell\\v1.0\\powershell.exe",
                 "args":[
-                    "-NoProfile", 
-                    "-ExecutionPolicy", 
+                    "-NoProfile",
+                    "-ExecutionPolicy",
                     "Bypass",
                     "-Command"
                 ]
@@ -17,7 +17,7 @@
     },
     "tasks": [
         {
-            "label": "Build IntuneWin",
+            "label": "Build Package",
             "type": "shell",
             "command": "powershell",
             "args": [
