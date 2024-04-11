@@ -1,4 +1,6 @@
 # Vars
+
+[string]$Repo = "E:\DevOps\PackageBuilds"
 [string]$Desktop = [Environment]::GetFolderPath('DesktopDirectory')
 [string]$WDADesktop = "C:\Users\WDAGUtilityAccount\Desktop"
 [string]$Win32App = "$env:ProgramData\win32app"
