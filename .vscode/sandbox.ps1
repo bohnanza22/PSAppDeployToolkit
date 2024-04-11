@@ -16,7 +16,7 @@ Copy-Item -Path ".vscode\$LogonCommand" -Destination "$Win32App\" -Recurse -Forc
     </MappedFolder>
 </MappedFolders>
 <LogonCommand>
-    <Command>powershell -executionpolicy unrestricted -command "Start-Process powershell -ArgumentList ""-nologo -file $WDADesktop\$LogonCommand"""</Command>
+    <Command>powershell -executionpolicy unrestricted -command "Start-Process powershell -ArgumentList '-nologo -file $WDADesktop\$LogonCommand -Application $Application'"</Command>
 </LogonCommand>
 </Configuration>
 "@ | Out-File "$Win32App\$Application.wsb"
