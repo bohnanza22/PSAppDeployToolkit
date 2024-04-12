@@ -291,8 +291,8 @@ if (Test-Path -Path "$deployPath\Deploy-Application.exe") {
     if (Test-Path -Path "$deployPath\Install-$Application.cmd") {
         # Start deployment with cmd file
         Write-Host 'Testing has started...' -ForegroundColor Cyan
-        Invoke-Item -Path "$deployPath\Install-$Application.cmd" -Verbose
-        Wait-ProcessCompletion -ProcessName 'cmd'
+        Start-Process -FilePath "$deployPath\Install-$Application.cmd" -RedirectStandardOutput "$env:WinDir\Logs\Software\Install-$Application-cmd.log" -Wait -WindowStyle Hidden -ErrorAction Continue
+        #Wait-ProcessCompletion -ProcessName "$Application"
         Write-Host 'Installation completed' -ForegroundColor Green
 
         Write-Host "You have $VerificationTime seconds to verify the installation before it is automatically uninstalled." -ForegroundColor Cyan
@@ -310,15 +310,15 @@ if (Test-Path -Path "$deployPath\Deploy-Application.exe") {
         }
 
         # Start uninstall
-        Invoke-Item -Path "$deployPath\Uninstall-$Application.cmd" -Verbose
-        Wait-ProcessCompletion -ProcessName 'cmd'
+        Start-Process -FilePath "$deployPath\Uninstall-$Application.cmd" -RedirectStandardOutput "$env:WinDir\Logs\Software\Uninstall-$Application-cmd.log" -Wait -WindowStyle Hidden -ErrorAction Continue
+        #Wait-ProcessCompletion -ProcessName "$Application"
         Write-Host 'Uninstall completed' -ForegroundColor Green
         Start-Sleep 3
         Write-Host 'Test completed' -ForegroundColor DarkGreen
     } else {
         # Start testing with the powershell file
         Write-Host 'Testing has started...' -ForegroundColor Cyan
-        Start-Process Powershell.exe -ArgumentList "-ExecutionPolicy Bypass -File '$deployPath\$Application.ps1' -DeploymentType Install" -Wait
+        Start-Process Powershell.exe -ArgumentList "-ExecutionPolicy Bypass -ProcessName '$Application' -File '$deployPath\$Application.ps1' -DeploymentType Install" -Wait
         Wait-ProcessCompletion -ProcessName 'Powershell'
         Write-Host 'Installation completed' -ForegroundColor DarkGreen
 
