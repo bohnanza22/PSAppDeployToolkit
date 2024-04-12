@@ -56,8 +56,7 @@ elseif (Test-Path -Path "$deployPath\$Application.ps1") {
 
         Invoke-Item -Path "$deployPath\Uninstall-$Application.cmd" -Verbose
         Write-Host 'test completed' -ForegroundColor DarkGreen
-    }
-    else {
+    } else {
 
         Start-Process Powershell.exe -ArgumentList "-ExecutionPolicy Bypass -File '$deployPath\$Application.ps1' -DeploymentType Install" -Wait
         Write-Host 'Installation completed' -ForegroundColor DarkGreen
@@ -78,8 +77,7 @@ elseif (Test-Path -Path "$deployPath\$Application.ps1") {
         Start-Process Powershell.exe -ArgumentList "-ExecutionPolicy Bypass -File '$deployPath\$Application.ps1' -DeploymentType Uninstall" -Wait
         Write-Host 'test completed' -ForegroundColor DarkGreen
     }
-}
-else {
+} else {
 
     Write-Error "No resources available in $deployPath to iniate test install."
 }

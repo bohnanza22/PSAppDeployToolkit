@@ -145,38 +145,38 @@ Function Set-CustomARP {
     #>
     [CmdletBinding()]
     Param (
-        [Parameter(Mandatory = $false, HelpMessage = 'Registry key name for ARP Entry - Optional')]
+        [Parameter(Mandatory = $false, HelpMessage = "Registry key name for ARP Entry - Optional")]
         [ValidateNotNullorEmpty()]
         [Alias('PkgName')]
         [string]$ArpKeyName = $installName,
-        [Parameter(Mandatory = $false, HelpMessage = 'DisplayName for ARP Entry - Optional')]
+        [Parameter(Mandatory = $false, HelpMessage = "DisplayName for ARP Entry - Optional")]
         [ValidateNotNullorEmpty()]
         [String]$ArpDisplayName = $installTitle,
-        [Parameter(Mandatory = $false, HelpMessage = 'Contact for ARP Entry - Optional')]
+        [Parameter(Mandatory = $false, HelpMessage = "Contact for ARP Entry - Optional")]
         [ValidateNotNullOrEmpty()]
         [String]$ArpContact = $appScriptAuthor,
-        [Parameter(Mandatory = $false, HelpMessage = 'Publisher for ARP Entry - Optional')]
+        [Parameter(Mandatory = $false, HelpMessage = "Publisher for ARP Entry - Optional")]
         [ValidateNotNullorEmpty()]
         [String]$ArpPublisher = $appVendor,
-        [Parameter(Mandatory = $false, HelpMessage = 'Icon for ARP Entry (Path on Target or Deploy-Application_v1r1.ico) - Optional')]
+        [Parameter(Mandatory = $false, HelpMessage = "Icon for ARP Entry (Path on Target or Deploy-Application_v1r1.ico) - Optional")]
         [ValidateNotNullorEmpty()]
         [String]$ArpDisplayIcon = $(If (Test-Path "$configLocalUninstallCache\$InstallName\SupportFiles\$InstallName.ico") { "$configLocalUninstallCache\$InstallName\SupportFiles\$InstallName.ico" } else { "$configLocalUninstallCache\${ArpKeyName}\AppDeployToolkit\AppDeployToolkitLogo.ico" }),
-        [Parameter(Mandatory = $false, HelpMessage = 'Version number for ARP Entry - Optional')]
+        [Parameter(Mandatory = $false, HelpMessage = "Version number for ARP Entry - Optional")]
         [ValidateNotNullorEmpty()]
         [String]$ArpDisplayVersion = $appVersion,
-        [Parameter(Mandatory = $false, HelpMessage = 'Date of Installation for ARP Entry - Optional')]
+        [Parameter(Mandatory = $false, HelpMessage = "Date of Installation for ARP Entry - Optional")]
         [ValidateNotNullorEmpty()]
         [string]$ArpInstallDate = ((Get-Date -Format 'yyyyMMdd').ToString()), # Ex: 20150720
-        [Parameter(Mandatory = $false, HelpMessage = 'UnInstallation command for ARP Entry - Optional')]
+        [Parameter(Mandatory = $false, HelpMessage = "UnInstallation command for ARP Entry - Optional")]
         [ValidateNotNullorEmpty()]
         [string]$ArpUninstallString = "PowerShell -executionpolicy bypass -file `"$configLocalUninstallCache\$ArpKeyName\${InstallName}.ps1`" Uninstall NonInteractive",
-        [Parameter(Mandatory = $false, HelpMessage = 'EstimatedSize of installed application for ARP Entry - Optional')]
+        [Parameter(Mandatory = $false, HelpMessage = "EstimatedSize of installed application for ARP Entry - Optional")]
         [ValidateNotNullOrEmpty()]
         [String]$ArpEstimatedSize,
-        [Parameter(Mandatory = $false, HelpMessage = 'Sets the bitness of the ARP entry - Optional')]
+        [Parameter(Mandatory = $false, HelpMessage = "Sets the bitness of the ARP entry - Optional")]
         [ValidateSet('32Bit', '64Bit', 'Auto')]
         [String]$BitNess = 'Auto',
-        [Parameter(Mandatory = $false, HelpMessage = 'Removes custom ARP entry')]
+        [Parameter(Mandatory = $false, HelpMessage = "Removes custom ARP entry")]
         [ValidateNotNullorEmpty()]
         [Switch]$Remove = $false,
         [Parameter(Mandatory = $false, HelpMessage = 'Tests for custom ARP entries, returns $true or $false.')]
@@ -198,7 +198,7 @@ Function Set-CustomARP {
                 [string]$HKLMUninstallKey32bit	= 'HKLM:SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall'
 
                 If ($ExistTest) {
-                    If ($ArpKeyName -match ':\\') {
+                    If ($ArpKeyName -match ":\\") {
                         Write-Log "`$ArpKeyName [$ArpKeyName] contains illegal characters ':\' " -Source ${CmdletName} -Severity 3
                         Throw "`$ArpKeyName contains illegal characters ':\' "
                     }
@@ -273,13 +273,13 @@ Function Set-CustomARP {
                     Write-Log "Variable `$ArpInstallDate resolved to [$ArpInstallDate]."  -Source ${CmdletName}
                     Write-Log "Variable `$ArpDisplayIcon resolved to [$ArpDisplayIcon]."  -Source ${CmdletName}
 
-                    Set-RegistryKey -Key $_TARGETPKGUNINSTALLKEY -Name 'Contact' -Value $ArpContact -Type String -ContinueOnError $ContinueOnError
-                    Set-RegistryKey -Key $_TARGETPKGUNINSTALLKEY -Name 'DisplayIcon' -Value $ArpDisplayIcon  -Type String -ContinueOnError $ContinueOnError
-                    Set-RegistryKey -Key $_TARGETPKGUNINSTALLKEY -Name 'DisplayName' -Value $ArpDisplayName -Type String -ContinueOnError $ContinueOnError
-                    Set-RegistryKey -Key $_TARGETPKGUNINSTALLKEY -Name 'DisplayVersion' -Value $ArpDisplayVersion  -Type String -ContinueOnError $ContinueOnError
+                    Set-RegistryKey -Key $_TARGETPKGUNINSTALLKEY -Name "Contact" -Value $ArpContact -Type String -ContinueOnError $ContinueOnError
+                    Set-RegistryKey -Key $_TARGETPKGUNINSTALLKEY -Name "DisplayIcon" -Value $ArpDisplayIcon  -Type String -ContinueOnError $ContinueOnError
+                    Set-RegistryKey -Key $_TARGETPKGUNINSTALLKEY -Name "DisplayName" -Value $ArpDisplayName -Type String -ContinueOnError $ContinueOnError
+                    Set-RegistryKey -Key $_TARGETPKGUNINSTALLKEY -Name "DisplayVersion" -Value $ArpDisplayVersion  -Type String -ContinueOnError $ContinueOnError
 
                     If ($ArpEstimatedSize) {
-                        Set-RegistryKey -Key $_TARGETPKGUNINSTALLKEY -Name 'EstimatedSize' -Value $ArpEstimatedSize -Type DWord -ContinueOnError $ContinueOnError
+                        Set-RegistryKey -Key $_TARGETPKGUNINSTALLKEY -Name "EstimatedSize" -Value $ArpEstimatedSize -Type DWord -ContinueOnError $ContinueOnError
                     } else {
                         #NOTE: if EstimatedSize is not set, ARP/Programs and Features goes on a scavenger hunt for the size and wastes time!
                         Try {
@@ -295,18 +295,18 @@ Function Set-CustomARP {
                             Write-Log -Message "Failed to calculate disk space requirement from source files (will use bogus value). `r`n$(Resolve-Error)" -Severity 2 -Source ${CmdletName}
                             [int32]$ArpEstimatedSize = 6835
                         }
-                        Set-RegistryKey -Key $_TARGETPKGUNINSTALLKEY -Name 'EstimatedSize' -Value $ArpEstimatedSize -Type DWord -ContinueOnError $ContinueOnError
+                        Set-RegistryKey -Key $_TARGETPKGUNINSTALLKEY -Name "EstimatedSize" -Value $ArpEstimatedSize -Type DWord -ContinueOnError $ContinueOnError
                     }
 
-                    Set-RegistryKey -Key $_TARGETPKGUNINSTALLKEY -Name 'InstallDate' -Value $ArpInstallDate -Type String -ContinueOnError $ContinueOnError
-                    Set-RegistryKey -Key $_TARGETPKGUNINSTALLKEY -Name 'NoRemove' -Value 0 -Type DWord -ContinueOnError $ContinueOnError
-                    Set-RegistryKey -Key $_TARGETPKGUNINSTALLKEY -Name 'NoRepair' -Value 1 -Type DWord -ContinueOnError $ContinueOnError
-                    Set-RegistryKey -Key $_TARGETPKGUNINSTALLKEY -Name 'NoModify' -Value 1 -Type DWord -ContinueOnError $ContinueOnError
-                    Set-RegistryKey -Key $_TARGETPKGUNINSTALLKEY -Name 'Publisher' -Value $ArpPublisher -Type String -ContinueOnError $ContinueOnError
-                    Set-RegistryKey -Key $_TARGETPKGUNINSTALLKEY -Name 'UninstallString' -Value $ArpUninstallString -Type ExpandString -ContinueOnError $ContinueOnError
+                    Set-RegistryKey -Key $_TARGETPKGUNINSTALLKEY -Name "InstallDate" -Value $ArpInstallDate -Type String -ContinueOnError $ContinueOnError
+                    Set-RegistryKey -Key $_TARGETPKGUNINSTALLKEY -Name "NoRemove" -Value 0 -Type DWord -ContinueOnError $ContinueOnError
+                    Set-RegistryKey -Key $_TARGETPKGUNINSTALLKEY -Name "NoRepair" -Value 1 -Type DWord -ContinueOnError $ContinueOnError
+                    Set-RegistryKey -Key $_TARGETPKGUNINSTALLKEY -Name "NoModify" -Value 1 -Type DWord -ContinueOnError $ContinueOnError
+                    Set-RegistryKey -Key $_TARGETPKGUNINSTALLKEY -Name "Publisher" -Value $ArpPublisher -Type String -ContinueOnError $ContinueOnError
+                    Set-RegistryKey -Key $_TARGETPKGUNINSTALLKEY -Name "UninstallString" -Value $ArpUninstallString -Type ExpandString -ContinueOnError $ContinueOnError
                     If (Test-RegistryValue -Key $_TARGETPKGUNINSTALLKEY -Value 'WindowsInstaller') {
                         #Because Remove-RegistryKey whines in red if not exist
-                        Remove-RegistryKey -Key $_TARGETPKGUNINSTALLKEY -Name 'WindowsInstaller' -ContinueOnError $true
+                        Remove-RegistryKey -Key $_TARGETPKGUNINSTALLKEY -Name "WindowsInstaller" -ContinueOnError $true
                     }
                 }
             } Catch {
@@ -387,12 +387,12 @@ Function Set-ARPChildOfParent {
     #>
     [CmdletBinding()]
     Param (
-        [Parameter(Mandatory = $true, ParameterSetName = 'Set', HelpMessage = 'name of ARP Registry key to become a Child of another ARP entry')]
-        [Parameter(Mandatory = $true, ParameterSetName = 'Remove', HelpMessage = 'name of ARP Registry key to become a Child of another ARP entry')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Set', HelpMessage = "name of ARP Registry key to become a Child of another ARP entry")]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Remove', HelpMessage = "name of ARP Registry key to become a Child of another ARP entry")]
         [Parameter(Mandatory = $false, ParameterSetName = 'RenameParentKeyName')]
         [ValidateNotNullorEmpty()]
         [string]$ArpKeyName,
-        [Parameter(Mandatory = $true, ParameterSetName = 'Remove', HelpMessage = 'Removes ParentKeyName and ParentDisplayName values - Optional')]
+        [Parameter(Mandatory = $true, ParameterSetName = 'Remove', HelpMessage = "Removes ParentKeyName and ParentDisplayName values - Optional")]
         [ValidateNotNullorEmpty()]
         [Switch]$Remove = $false,
         [Parameter(Mandatory = $false, HelpMessage = "Removes the Parent* values that makes the ARP entry a Child of `$installName [by default]")]
@@ -449,7 +449,7 @@ Function Set-ARPChildOfParent {
                                 [Bool]$FoundArpKey = $true
                             }
                         }
-                        write-log 'Replacing is done' -Source ${CmdletName} -Severity 5
+                        write-log "Replacing is done" -Source ${CmdletName} -Severity 5
                     } Else {
                         # check if UninstallString registry value exists. Do not make "ChildOfParent" if none exist as it causes problems (Matt found this issue)
                         If (Test-RegistryValue -Key "$Key\$ArpKeyName" -Value UninstallString) {
@@ -542,7 +542,7 @@ Function Set-LocalDiskUninstall {
         [ValidateNotNullorEmpty()]
         [Alias('FolderName')]
         [string]$PkgName = $installName,
-        [Parameter(Mandatory = $false, HelpMessage = 'Removes the Local Uninstall folder')]
+        [Parameter(Mandatory = $false, HelpMessage = "Removes the Local Uninstall folder")]
         [ValidateNotNullorEmpty()]
         [Switch]$Remove = $false,
         [Parameter(Mandatory = $false)]
@@ -568,12 +568,12 @@ Function Set-LocalDiskUninstall {
             }
 
             If ( $PKGUNINSTALLDIR -eq $scriptDirectory ) {
-                Write-Log 'Running from Local Disk Uninstall Cache, not touching local cache.'  -Source ${CmdletName}
+                Write-Log "Running from Local Disk Uninstall Cache, not touching local cache."  -Source ${CmdletName}
             } else {
                 Write-Log "Creating Local Disk Uninstall Cache folder [$PKGUNINSTALLDIR]."  -Source ${CmdletName}
                 If ( Test-Path -Path "$PKGUNINSTALLDIR" ) {
                     Write-Log "Local Disk Uninstall Cache directory [$PkgName] already exists."  -Source ${CmdletName}
-                    Write-Log 'Overwriting...'  -Source ${CmdletName}
+                    Write-Log "Overwriting..."  -Source ${CmdletName}
                 }
                 Write-Log "Copying files to [$PKGUNINSTALLDIR]..."  -Source ${CmdletName}
                 New-Folder -Path $PKGUNINSTALLDIR  -ContinueOnError $ContinueOnError
@@ -627,12 +627,12 @@ Function Set-ARP_SystemComponent {
     #>
     [CmdletBinding()]
     Param (
-        [Parameter(Mandatory = $true, HelpMessage = 'Name of Registry key (Not full path)')]
+        [Parameter(Mandatory = $true, HelpMessage = "Name of Registry key (Not full path)")]
         [string]$ArpKeyName,
         [Parameter(Mandatory = $false)]
         [ValidateNotNullorEmpty()]
-        [ValidateSet('Hide', 'UnHide')]
-        [string]$Action = 'Hide'
+        [ValidateSet("Hide", "UnHide")]
+        [string]$Action = "Hide"
     )
     Begin {
         ## Get the name of this function and write header
@@ -647,24 +647,24 @@ Function Set-ARP_SystemComponent {
 
             #Where is the ARP key? 32 or 64 bit?
             If (Test-Path $HKLMUninstallKey32) {
-                If ($Action -ceq 'Hide') {
+                If ($Action -ceq "Hide") {
                     Write-Log " Hiding ARP entry [$ArpKeyName] Exists as a 32bit ARP entry" -Source ${CmdletName}
-                    Set-RegistryKey -Key $HKLMUninstallKey32 -Name 'SystemComponent' -Value 1 -Type DWORD
+                    Set-RegistryKey -Key $HKLMUninstallKey32 -Name "SystemComponent" -Value 1 -Type DWORD
                 } else {
-                    Write-Log ' Unhiding ARP entry by deleting SystemComponent value [32bit]' -Source ${CmdletName}
-                    Remove-RegistryKey -Key $HKLMUninstallKey32 -Name 'SystemComponent'
+                    Write-Log " Unhiding ARP entry by deleting SystemComponent value [32bit]" -Source ${CmdletName}
+                    Remove-RegistryKey -Key $HKLMUninstallKey32 -Name "SystemComponent"
                 }
             } else {
                 Write-Log " [$ArpKeyName] is NOT a 32bit ARP entry" -Source ${CmdletName}
             }
 
             If (Test-Path $HKLMUninstallKey64) {
-                If ($Action -ceq 'Hide') {
+                If ($Action -ceq "Hide") {
                     Write-Log " Hiding ARP entry [$ArpKeyName] Exists as a 64bit ARP entry" -Source ${CmdletName}
-                    Set-RegistryKey -Key $HKLMUninstallKey64 -Name 'SystemComponent' -Value 1 -Type DWORD
+                    Set-RegistryKey -Key $HKLMUninstallKey64 -Name "SystemComponent" -Value 1 -Type DWORD
                 } else {
-                    Write-Log ' Unhiding ARP entry by deleting SystemComponent value [64bit]' -Source ${CmdletName}
-                    Remove-RegistryKey -Key $HKLMUninstallKey64 -Name 'SystemComponent'
+                    Write-Log " Unhiding ARP entry by deleting SystemComponent value [64bit]" -Source ${CmdletName}
+                    Remove-RegistryKey -Key $HKLMUninstallKey64 -Name "SystemComponent"
                 }
             } else {
                 Write-Log " [$ArpKeyName] is not a 64bit ARP entry " -Source ${CmdletName}
@@ -720,16 +720,16 @@ Function Set-ARPNoRemoveNoModifyNoRepair {
     #>
     [CmdletBinding()]
     Param (
-        [Parameter(Mandatory = $true, HelpMessage = 'Name of Registry key (Not full path)')]
+        [Parameter(Mandatory = $true, HelpMessage = "Name of Registry key (Not full path)")]
         [string]$ArpKeyName,
-        [Parameter(Mandatory = $true, HelpMessage = 'Set to ONE of the following: NoRemove NoModify NoRepair AllowRemove AllowModify AllowRepair')]
+        [Parameter(Mandatory = $true, HelpMessage = "Set to ONE of the following: NoRemove NoModify NoRepair AllowRemove AllowModify AllowRepair")]
         [ValidateNotNullorEmpty()]
         [ValidateSet('NoRemove', 'NoModify', 'NoRepair', 'AllowRemove', 'AllowModify', 'AllowRepair', IgnoreCase = $false)]
-        [string]$Action = '',
-        [Parameter(Mandatory = $false, HelpMessage = 'Set to ONE of the following: DeleteValue SetValueToZero. DeleteValue is the default' )]
+        [string]$Action = "",
+        [Parameter(Mandatory = $false, HelpMessage = "Set to ONE of the following: DeleteValue SetValueToZero. DeleteValue is the default" )]
         [ValidateNotNullorEmpty()]
         [ValidateSet('DeleteValue', 'SetValueToZero')]
-        [string]$DeleteAction = 'DeleteValue'
+        [string]$DeleteAction = "DeleteValue"
     )
     Begin {
         ## Get the name of this function and write header
@@ -744,11 +744,11 @@ Function Set-ARPNoRemoveNoModifyNoRepair {
 
             #Where is the ARP key? 32 or 64 bit?
             If (Test-Path -LiteralPath $HKLMUninstallKey32) {
-                If ($Action -like 'No*') {
+                If ($Action -like "No*") {
                     Write-Log " Setting [$Action] for ARP entry [$ArpKeyName] Exists as a 32bit ARP entry" -Source ${CmdletName}
                     Set-RegistryKey -Key $HKLMUninstallKey32 -Name $Action -Value 1 -Type DWORD
-                } ElseIf ($Action -like 'Allow*') {
-                    [String]$ActualValueName = $Action.replace('Allow', 'No')
+                } ElseIf ($Action -like "Allow*") {
+                    [String]$ActualValueName = $Action.replace("Allow", "No")
                     If ($DeleteAction -eq 'DeleteValue') {
                         Write-Log " Deleting [$ActualValueName] for ARP entry [$ArpKeyName] Exists as a 32bit ARP entry" -Source ${CmdletName}
                         Remove-RegistryKey -Key $HKLMUninstallKey32 -Name $ActualValueName
@@ -766,11 +766,11 @@ Function Set-ARPNoRemoveNoModifyNoRepair {
             }
 
             If (Test-Path -LiteralPath $HKLMUninstallKey64) {
-                If ($Action -like 'No*') {
+                If ($Action -like "No*") {
                     Write-Log " Setting [$Action] for ARP entry [$ArpKeyName] Exists as a 64bit ARP entry" -Source ${CmdletName}
                     Set-RegistryKey -Key $HKLMUninstallKey64 -Name $Action -Value 1 -Type DWORD
-                } ElseIf ($Action -like 'Allow*') {
-                    [String]$ActualValueName = $Action.replace('Allow', 'No')
+                } ElseIf ($Action -like "Allow*") {
+                    [String]$ActualValueName = $Action.replace("Allow", "No")
                     If ($DeleteAction -eq 'DeleteValue') {
                         Write-Log " Deleting [$ActualValueName] for ARP entry [$ArpKeyName] Exists as a 64bit ARP entry" -Source ${CmdletName}
                         Remove-RegistryKey -Key $HKLMUninstallKey64 -Name $ActualValueName
@@ -803,6 +803,8 @@ Function Set-ARPNoRemoveNoModifyNoRepair {
 ##*===============================================
 ##* SCRIPT BODY
 ##*===============================================
+#Local cache location of PSADT file --> NO SPACES in the path!!!
+[String]$configLocalUninstallCache = "$envProgramFiles\PSADT\uninstall"
 
 If ($scriptParentPath) {
     Write-Log -Message "Script [$($MyInvocation.MyCommand.Definition)] dot-source invoked by [$(((Get-Variable -Name MyInvocation).Value).ScriptName)]" -Source $appDeployToolkitExtName
