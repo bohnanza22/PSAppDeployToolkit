@@ -73,5 +73,11 @@
         "Git Bash": {
             "source": "Git Bash"
         }
-    }
+    },
+    "projectManager.git.baseFolders": [
+        "E:\\DevOps"
+    ],
+    "projectManager.vscode.baseFolders": [
+        "E:\\DevOps"
+    ]
 }
