@@ -1,0 +1,3 @@
+﻿Desktop Info
+<dti-items><dti-text>	<dti-display>
+</dti-items>
