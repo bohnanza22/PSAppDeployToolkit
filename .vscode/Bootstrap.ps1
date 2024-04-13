@@ -257,6 +257,7 @@ Restart-Explorer
 # test for the Deploy-Application.exe file
 if (Test-Path -Path "$deployPath\Deploy-Application.exe") {
     Write-Host 'Testing has started...' -ForegroundColor Cyan
+    Write-Host "Running [$deployPath\Deploy-Application.exe] Install." -ForegroundColor Cyan
     # Start deployment with .exe
     Start-Process -FilePath "$deployPath\Deploy-Application.exe" -Wait
     Wait-ProcessCompletion -ProcessName 'Deploy-Application'
@@ -278,6 +279,7 @@ if (Test-Path -Path "$deployPath\Deploy-Application.exe") {
     }
 
     # Start uninstall
+    Write-Host "Running [$deployPath\Deploy-Application.exe] Uninstall." -ForegroundColor Cyan
     Start-Process -FilePath "$deployPath\Deploy-Application.exe" -ArgumentList 'Uninstall' -Wait
     Wait-ProcessCompletion -ProcessName 'Deploy-Application'
     Write-Host 'Uninstall completed' -ForegroundColor Green
@@ -290,6 +292,7 @@ if (Test-Path -Path "$deployPath\Deploy-Application.exe") {
     if (Test-Path -Path "$deployPath\Install-$Application.cmd") {
         # Start deployment with cmd file
         Write-Host 'Testing has started...' -ForegroundColor Cyan
+        Write-Host "Running [$deployPath\Deploy-$Application.cmd] Install." -ForegroundColor Cyan
         Start-Process -FilePath "$deployPath\Install-$Application.cmd" -RedirectStandardOutput "$env:WinDir\Logs\Software\Install-$Application-cmd.log" -Wait -WindowStyle Hidden -ErrorAction Continue
         #Wait-ProcessCompletion -ProcessName "$Application"
         Write-Host 'Installation completed' -ForegroundColor Green
@@ -309,6 +312,7 @@ if (Test-Path -Path "$deployPath\Deploy-Application.exe") {
         }
 
         # Start uninstall
+        Write-Host "Running [$deployPath\Deploy-$Application.cmd] Uninstall." -ForegroundColor Cyan
         Start-Process -FilePath "$deployPath\Uninstall-$Application.cmd" -RedirectStandardOutput "$env:WinDir\Logs\Software\Uninstall-$Application-cmd.log" -Wait -WindowStyle Hidden -ErrorAction Continue
         #Wait-ProcessCompletion -ProcessName "$Application"
         Write-Host 'Uninstall completed' -ForegroundColor Green
@@ -317,6 +321,7 @@ if (Test-Path -Path "$deployPath\Deploy-Application.exe") {
     } else {
         # Start testing with the powershell file
         Write-Host 'Testing has started...' -ForegroundColor Cyan
+        Write-Host "Running [$deployPath\$Application.ps1] Install." -ForegroundColor Cyan
         Start-Process Powershell.exe -ArgumentList "-ExecutionPolicy Bypass -ProcessName '$Application' -File '$deployPath\$Application.ps1' -DeploymentType Install" -Wait
         Wait-ProcessCompletion -ProcessName 'Powershell'
         Write-Host 'Installation completed' -ForegroundColor DarkGreen
@@ -336,6 +341,7 @@ if (Test-Path -Path "$deployPath\Deploy-Application.exe") {
         }
 
         # Start Uninstall
+        Write-Host "Running [$deployPath\$Application.ps1] Uninstall." -ForegroundColor Cyan
         Start-Process Powershell.exe -ArgumentList "-ExecutionPolicy Bypass -File '$deployPath\$Application.ps1' -DeploymentType Uninstall" -Wait
         Wait-ProcessCompletion -ProcessName 'Powershell'
         Write-Host 'Uninstall completed' -ForegroundColor Green

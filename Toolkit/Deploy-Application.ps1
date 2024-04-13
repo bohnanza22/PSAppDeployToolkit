@@ -105,7 +105,7 @@ Try {
     ##*===============================================
     ##* VARIABLE DECLARATION
     ##*===============================================
-    ## Variables: Application
+    ## TODO Variables: Application
     [String]$appVendor = ''
     [String]$appName = ''
     [String]$appVersion = ''
@@ -116,9 +116,24 @@ Try {
     [String]$appScriptDate = 'XX/XX/20XX'
     [String]$appScriptAuthor = '<author name>'
     ##*===============================================
-    ## Variables: Install Titles (Only set here to override defaults set by the toolkit)
-    [String]$installName = ''
-    [String]$installTitle = ''
+	## TODO Custom Variables to make MSI packaging easier reference: https://discourse.psappdeploytoolkit.com/t/msi-how-to-install-uninstall-and-log-silently/3471
+	[string]$AppEXEName	= "" # actual file name of the .EXE installer in the \Files folder
+	[string]$AppMSIName	= "" # actual file name of the .MSI installer in the \Files folder
+	[string]$AppMSICode	= '' # The MSI's PRODUCTCODE (Use Orca and look in Property table of the .MSI)
+	## Use the above custom variables with the following install command examples:
+		<#
+		#* EXE Install Command Example
+		[String]$AppEXEArgs = "/S"
+		Execute-Process -Path "$dirFiles\$AppEXEName" -Parameters $AppEXEArgs -WaitForMsiExec:$true -WindowStyle 'Hidden'
+
+		#* MSI Install Command Example
+		[String]$AppMSIArgs = "PROPERTY=`"https://ExampleProperty.com`" /qn"
+		Execute-MSI -Action Install -Path $AppMSIName -AddParameters $AppMSIArgs -ContinueOnError $False -LogName "${AppMSIName}_MSI_Install.log"
+
+		#* MSI Unnstall Command
+		[String]$AppMSIArgs = "/qn"
+		Execute-MSI -Action Uninstall -Path $AppMSIName -AddParameters $AppMSIArgs -ContinueOnError $False -LogName "${AppMSIName}_MSI_Uninstall.log"
+		#>
 
     ##* Do not modify section below
     #region DoNotModify
@@ -180,13 +195,13 @@ Try {
         ##*===============================================
         [String]$installPhase = 'Pre-Installation'
 
-        ## Show Welcome Message, close Internet Explorer if required, allow up to 3 deferrals, verify there is enough disk space to complete the install, and persist the prompt
+        ## TODO Show Welcome Message, close Internet Explorer if required, allow up to 3 deferrals, verify there is enough disk space to complete the install, and persist the prompt
         Show-InstallationWelcome -CloseApps 'iexplore' -AllowDefer -DeferTimes 3 -CheckDiskSpace -PersistPrompt
 
-        ## Show Progress Message (with the default message)
+        ## TODO Show Progress Message (with the default message)
         Show-InstallationProgress
 
-        ## <Perform Pre-Installation tasks here>
+        ## TODO <Perform Pre-Installation tasks here>
 
 
         ##*===============================================
@@ -204,7 +219,7 @@ Try {
             }
         }
 
-        ## <Perform Installation tasks here>
+        ## TODO <Perform Installation tasks here>
 
 
         ##*===============================================
@@ -212,11 +227,11 @@ Try {
         ##*===============================================
         [String]$installPhase = 'Post-Installation'
 
-        ## <Perform Post-Installation tasks here>
+        ## TODO <Perform Post-Installation tasks here>
 
-        ## Display a message at the end of the install
+        ## TODO Display a message at the end of the install
         If (-not $useDefaultMsi) {
-            Show-InstallationPrompt -Message 'You can customize text to appear at the end of an install or remove it completely for unattended installations.' -ButtonRightText 'OK' -Icon Information -NoWait
+            Show-InstallationPrompt -Message "$appName $appVersion has been installed." -ButtonRightText 'OK' -Icon Information -NoWait
         }
     }
     ElseIf ($deploymentType -ieq 'Uninstall') {
@@ -225,13 +240,13 @@ Try {
         ##*===============================================
         [String]$installPhase = 'Pre-Uninstallation'
 
-        ## Show Welcome Message, close Internet Explorer with a 60 second countdown before automatically closing
+        ## TODO Show Welcome Message, close Internet Explorer with a 60 second countdown before automatically closing
         Show-InstallationWelcome -CloseApps 'iexplore' -CloseAppsCountdown 60
 
-        ## Show Progress Message (with the default message)
+        ## TODO Show Progress Message (with the default message)
         Show-InstallationProgress
 
-        ## <Perform Pre-Uninstallation tasks here>
+        ## TODO <Perform Pre-Uninstallation tasks here>
 
 
         ##*===============================================
@@ -247,7 +262,7 @@ Try {
             Execute-MSI @ExecuteDefaultMSISplat
         }
 
-        ## <Perform Uninstallation tasks here>
+        ## TODO <Perform Uninstallation tasks here>
 
 
         ##*===============================================
@@ -255,7 +270,7 @@ Try {
         ##*===============================================
         [String]$installPhase = 'Post-Uninstallation'
 
-        ## <Perform Post-Uninstallation tasks here>
+        ## TODO <Perform Post-Uninstallation tasks here>
 
 
     }
@@ -265,13 +280,13 @@ Try {
         ##*===============================================
         [String]$installPhase = 'Pre-Repair'
 
-        ## Show Welcome Message, close Internet Explorer with a 60 second countdown before automatically closing
+        ## TODO Show Welcome Message, close Internet Explorer with a 60 second countdown before automatically closing
         Show-InstallationWelcome -CloseApps 'iexplore' -CloseAppsCountdown 60
 
-        ## Show Progress Message (with the default message)
+        ## TODO Show Progress Message (with the default message)
         Show-InstallationProgress
 
-        ## <Perform Pre-Repair tasks here>
+        ## TODO <Perform Pre-Repair tasks here>
 
         ##*===============================================
         ##* REPAIR
@@ -285,14 +300,14 @@ Try {
             }
             Execute-MSI @ExecuteDefaultMSISplat
         }
-        ## <Perform Repair tasks here>
+        ## TODO <Perform Repair tasks here>
 
         ##*===============================================
         ##* POST-REPAIR
         ##*===============================================
         [String]$installPhase = 'Post-Repair'
 
-        ## <Perform Post-Repair tasks here>
+        ## TODO <Perform Post-Repair tasks here>
 
 
     }
