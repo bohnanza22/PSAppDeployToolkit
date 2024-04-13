@@ -42,17 +42,32 @@
             }
         },
         {
-            "label": "UPLOAD to Intune",
-            "type": "shell",
+            "label"  : "UPLOAD to Intune",
+            "type"   : "shell",
             "command": "powershell",
-            "args": [
+            "args"   : [
                 "-ExecutionPolicy",
                 "Bypass",
                 "-File",
                 "${cwd}/.vscode/UploadToIntune.ps1"
             ],
             "group": {
-                "kind": "build",
+                "kind"     : "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label"  : "Clone Git Repository",
+            "type"   : "shell",
+            "command": "powershell",
+            "args"   : [
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "${cwd}/.vscode/Copy-GitRepository.ps1"
+            ],
+            "group": {
+                "kind"     : "build",
                 "isDefault": true
             }
         },
