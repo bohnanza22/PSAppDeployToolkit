@@ -204,7 +204,7 @@ Set-ItemProperty -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer
 #Set-ItemProperty -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize' -Name 'AppsUseLightTheme' -Type DWord -Value 1 -Verbose
 #Set-ItemProperty -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes\Personalize' -Name 'SystemUsesLightTheme' -Type DWord -Value 1 -Verbose
 # Small desktop icons
-#Set-ItemProperty -Path 'HKCU:\SOFTWARE\Microsoft\Windows\Shell\Bags\1\Desktop' -Name 'IconSize' -Type DWord -Value 32 -Verbose
+<# #Set-ItemProperty -Path 'HKCU:\SOFTWARE\Microsoft\Windows\Shell\Bags\1\Desktop' -Name 'IconSize' -Type DWord -Value 32 -Verbose
 Set-ItemProperty -Path 'HKCU:\SOFTWARE\Microsoft\Windows\Shell\Bags\1\Desktop' -Name 'LogicalViewMode' -Type DWord -Value 3 -Verbose
 Set-ItemProperty -Path 'HKCU:\SOFTWARE\Microsoft\Windows\Shell\Bags\1\Desktop' -Name 'Mode' -Type DWord -Value 1 -Verbose
 # Performance settings
@@ -219,7 +219,7 @@ Set-ItemProperty -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer
 Set-ItemProperty -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\VisualEffects' -Name 'VisualFXSetting' -Type DWord -Value 3 -Verbose
 Set-ItemProperty -Path 'HKCU:\SOFTWARE\Microsoft\Windows\DWM' 'EnableAeroPeek' -Type DWord -Value 0 -Verbose
 # Display Windows version over wallpaper
-Set-ItemProperty -Path 'HKCU:\Control Panel\Desktop' -Name 'PaintDesktopVersion' -Type DWord -Value 1 -Verbose
+Set-ItemProperty -Path 'HKCU:\Control Panel\Desktop' -Name 'PaintDesktopVersion' -Type DWord -Value 1 -Verbose #>
 # Show file name extensions
 Set-ItemProperty -Path 'HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Explorer\Advanced' -Name 'HideFileExt' -Type DWord -Value 0 -Verbose
 # Show hidden and protected system files
@@ -253,7 +253,6 @@ New-ItemProperty 'HKLM:\SOFTWARE\Microsoft\Active Setup\Installed Components\CMt
 Disable-Volume
 
 Restart-Explorer
-
 
 # test for the Deploy-Application.exe file
 if (Test-Path -Path "$deployPath\Deploy-Application.exe") {
@@ -353,5 +352,3 @@ Read-Host -Prompt 'Press any key to continue...'
 #
 # End
 #
-
-
