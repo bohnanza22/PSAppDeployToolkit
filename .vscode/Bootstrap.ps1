@@ -254,7 +254,6 @@ Disable-Volume
 
 Restart-Explorer
 
-
 # test for the Deploy-Application.exe file
 if (Test-Path -Path "$deployPath\Deploy-Application.exe") {
     Write-Host 'Testing has started...' -ForegroundColor Cyan
