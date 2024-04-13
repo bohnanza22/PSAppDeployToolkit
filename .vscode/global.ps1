@@ -1,5 +1,4 @@
 # Vars
-
 [string]$Repo = 'E:\DevOps\PackageBuilds' # Repo for software testing
 [string]$wsbResources = "$env:ProgramData\WindowsSandboxResources" # Staging location of WSB resource files
 [string]$Desktop = [Environment]::GetFolderPath('DesktopDirectory') # Gets the Desktop directory path
