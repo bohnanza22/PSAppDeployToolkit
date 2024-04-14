@@ -1,5 +1,5 @@
 function Copy-GitRepository {
-<#
+    <#
 .SYNOPSIS
     Clones a Git repository to a specified destination folder, with optional renaming.
 
@@ -47,9 +47,9 @@ function Copy-GitRepository {
     # Check if destination folder already exists
     if (Test-Path $destFolder) {
         # If the destination folder already has a folder with the same name, append a sequential number
-        $i                  = 1
+        $i = 1
         $baseRepoFolderName = $(Split-Path -Leaf $repoPath)
-        $newRepoFolder      = Join-Path -Path $destFolder -ChildPath ($baseRepoFolderName + "_$i")
+        $newRepoFolder = Join-Path -Path $destFolder -ChildPath ($baseRepoFolderName + "_$i")
         while (Test-Path $newRepoFolder) {
             $i++
             $newRepoFolder = Join-Path -Path $destFolder -ChildPath ($baseRepoFolderName + "_$i")
@@ -68,6 +68,17 @@ function Copy-GitRepository {
         Rename-Item -Path $newRepoFolder -NewName $newFolderName -Force -Verbose
         $newRepoFolder = Join-Path -Path $destFolder -ChildPath $newFolderName
     }
+
+    # Get the name of the current directory (project folder)
+    $projectFolderName = [System.IO.Path]::GetFileName($newRepoFolder)
+
+    # Rename the local main branch to the project folder name
+    Push-Location $newRepoFolder
+    git branch -m main $projectFolderName
+    Pop-Location
+
+    # Push the new main branch to the remote repository
+    #git push -u origin $projectFolderName
 }
 
 Copy-GitRepository -repoPath 'E:\DevOps\PSADT-Master\PSAppDeployToolkit' -destFolder 'E:\DevOps\PSADT-Projects'
