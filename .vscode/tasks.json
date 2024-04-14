@@ -72,6 +72,21 @@
             }
         },
         {
+            "label"  : "Clear Build and Test Cache",
+            "type"   : "shell",
+            "command": "powershell",
+            "args"   : [
+                "-ExecutionPolicy",
+                "Bypass",
+                "-File",
+                "${cwd}/.vscode/Clear-BuildTestCache.ps1"
+            ],
+            "group": {
+                "kind"     : "build",
+                "isDefault": true
+            }
+        },
+        {
             "label": "AppDeployToolkitHelp",
             "type": "shell",
             "command": "powershell",
