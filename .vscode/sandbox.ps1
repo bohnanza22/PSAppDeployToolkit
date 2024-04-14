@@ -1,5 +1,10 @@
 # Vars
+# dotsource the Global.ps1 file to bring in global variables
 . '.vscode\Global.ps1'
+
+# Copy Cache
+Remove-Item -Path "$Cache" -Recurse -Force -ErrorAction Ignore
+Copy-Item -Path 'Toolkit' -Destination "$Cache" -Recurse -Force -Verbose -ErrorAction Ignore
 
 # Reset Resources
 Remove-Item -Path "$Resources" -Recurse -Force -ErrorAction Ignore

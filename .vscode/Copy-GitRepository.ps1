@@ -1,3 +1,7 @@
+# Vars
+# dotsource the Global.ps1 file to bring in global variables
+. '.vscode\Global.ps1'
+
 function Copy-GitRepository {
     <#
 .SYNOPSIS
@@ -81,4 +85,4 @@ function Copy-GitRepository {
     #git push -u origin $projectFolderName
 }
 
-Copy-GitRepository -repoPath 'E:\DevOps\PSADT-Master\PSAppDeployToolkit' -destFolder 'E:\DevOps\PSADT-Projects'
+Copy-GitRepository -repoPath $psadtMaster -destFolder $psadtProject

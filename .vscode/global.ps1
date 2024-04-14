@@ -9,10 +9,5 @@
 [string]$Cache        = "$env:ProgramData\win32app\$Application" # WSB App package cache folder.
 [string]$Resources    = "$env:ProgramData\win32app\Resources" # Cache location for WSB resource files
 [string]$LogonCommand = "Bootstrap.ps1" # PS file to be ran when WSB loads
-
-# Copy Cache
-Remove-Item -Path "$Cache" -Recurse -Force -ErrorAction Ignore
-Copy-Item -Path "Toolkit" -Destination "$Cache" -Recurse -Force -Verbose -ErrorAction Ignore
-
-# uncomment below command to open the $Cache location in explorer.
-#explorer "$Cache"
+[string]$psadtMaster  = 'E:\DevOps\PSADT-Master\PSAppDeployToolkit' # Location of your PSADT Mater repo you clone your projects from
+[string]$psadtProject = 'E:\DevOps\PSADT-Projects' # Location of your PSADT Projects
