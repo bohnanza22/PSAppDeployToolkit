@@ -81,24 +81,4 @@
         "E:\\DevOps"
     ],
     "peacock.surpriseMeOnStartup": true,
-    "workbench.colorCustomizations": {
-        "activityBar.activeBackground": "#7de605",
-        "activityBar.background": "#7de605",
-        "activityBar.foreground": "#15202b",
-        "activityBar.inactiveForeground": "#15202b99",
-        "activityBarBadge.background": "#0588fa",
-        "activityBarBadge.foreground": "#e7e7e7",
-        "commandCenter.border": "#15202b99",
-        "sash.hoverBorder": "#7de605",
-        "statusBar.background": "#62b404",
-        "statusBar.foreground": "#15202b",
-        "statusBarItem.hoverBackground": "#478203",
-        "statusBarItem.remoteBackground": "#62b404",
-        "statusBarItem.remoteForeground": "#15202b",
-        "titleBar.activeBackground": "#62b404",
-        "titleBar.activeForeground": "#15202b",
-        "titleBar.inactiveBackground": "#62b40499",
-        "titleBar.inactiveForeground": "#15202b99"
-    },
-    "peacock.color": "#62b404"
 }
