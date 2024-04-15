@@ -1,3 +1,5 @@
+#global.ps1
+#This script populates variables for use in various tasks scripts in this vscode environment.
 # Vars
 
 [string]$Repo         = "E:\DevOps\PackageBuilds" # Repo for software testing
