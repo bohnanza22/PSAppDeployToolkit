@@ -262,7 +262,7 @@ if (Test-Path -Path "$deployPath\Deploy-Application.exe") {
     Start-Process -FilePath "$deployPath\Deploy-Application.exe" -Wait
     Wait-ProcessCompletion -ProcessName 'Deploy-Application'
     Write-Host 'Install completed' -ForegroundColor Green
-    Write-Host "You have $VerificationTime seconds to verify the installation before it is automatically uninstalled." -ForegroundColor Cyan
+    Write-Host "You have $VerificationTime seconds to verify the install. After countdown ends press anykey..." -ForegroundColor Cyan
 
     # Waiting for manual verification of deployment
     $EndTime = [datetime]::UtcNow.AddSeconds($VerificationTime)
@@ -297,7 +297,7 @@ if (Test-Path -Path "$deployPath\Deploy-Application.exe") {
         #Wait-ProcessCompletion -ProcessName "$Application"
         Write-Host 'Installation completed' -ForegroundColor Green
 
-        Write-Host "You have $VerificationTime seconds to verify the installation before it is automatically uninstalled." -ForegroundColor Cyan
+        Write-Host "You have $VerificationTime seconds to verify the install. After countdown ends press anykey..." -ForegroundColor Cyan
 
         $EndTime = [datetime]::UtcNow.AddSeconds($VerificationTime)
 
@@ -326,8 +326,7 @@ if (Test-Path -Path "$deployPath\Deploy-Application.exe") {
         Wait-ProcessCompletion -ProcessName 'Powershell'
         Write-Host 'Installation completed' -ForegroundColor DarkGreen
 
-        Write-Host "You have $VerificationTime seconds to verify the installation before it is automatically uninstalled." -ForegroundColor Cyan
-
+        Write-Host "You have $VerificationTime seconds to verify the install. After countdown ends press anykey..." -ForegroundColor Cyan
         $EndTime = [datetime]::UtcNow.AddSeconds($VerificationTime)
 
         while (($TimeRemaining = ($EndTime - [datetime]::UtcNow)) -gt 0) {
